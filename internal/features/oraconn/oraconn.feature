@@ -3,6 +3,7 @@ Feature: Connect to oracle
     Given a running oracle instance
     When provide a connection string for the running instance
     Then a connection is returned
+    And I can select the system timestamp from dual
 
   Scenario:
     Given a connection string with no listener

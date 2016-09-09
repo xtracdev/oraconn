@@ -5,6 +5,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/xtraclabs/oraconn"
 	"github.com/stretchr/testify/assert"
+	"time"
 )
 
 const connectStr = "system/oracle@//localhost:1521/xe.oracle.docker"
@@ -26,6 +27,22 @@ func init() {
 		var err error
 		db, err = oraconn.OpenAndConnect(connectStr, 10)
 		assert.Nil(T, err)
+	})
+
+	And(`^I can select the system timestamp from dual$`, func() {
+
+		rows, err := db.Query("select systimestamp from dual")
+		if assert.Nil(T, err) {
+			defer rows.Close()
+
+			for rows.Next() {
+				var ts time.Time
+				rows.Scan(&ts)
+				log.Infof("systimestamp from dual is %s", ts.Format(time.RFC3339))
+			}
+
+			assert.Nil(T, rows.Err())
+		}
 	})
 
 	Given(`^a connection string with no listener$`, func() {
