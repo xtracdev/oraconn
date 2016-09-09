@@ -9,3 +9,9 @@ Feature: Connect to oracle
     Given a connection string with no listener
     When I connect to no listener
     Then an error is returned
+
+  Scenario:
+    Given a loss of database connectivity
+    When I detect I've lost connectivity
+    Then I can reconnect
+    And I can select data after reconnecting

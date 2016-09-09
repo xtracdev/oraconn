@@ -12,6 +12,7 @@ import (
 
 type OracleDB struct {
 	*sql.DB
+	connectStr string
 }
 
 var ErrRetryCount = errors.New("Retry count must be greater than 1")
@@ -54,11 +55,29 @@ func OpenAndConnect(connectString string, retryCount int) (*OracleDB, error) {
 		return nil, dbError
 	}
 
-	return &OracleDB{db}, nil
+	return &OracleDB{DB:db,connectStr:connectString}, nil
+}
+
+//Reconnect to the database. Useful when a loss of connection has been detected
+func (odb *OracleDB) Reconnect(retryCount int) error {
+	odb.Close()
+	db,err := OpenAndConnect(odb.connectStr, retryCount)
+	if err != nil {
+		return err
+	}
+
+	odb.DB = db.DB
+	return nil
 }
 
 //BuildConnectString builds an Oracle connect string from its constituent parts.
 func BuildConnectString(user, password, host, port, service string) string {
 	return fmt.Sprintf("%s/%s@//%s:%s/%s",
 				user, password, host, port, service)
+}
+
+//IsConnectionError returns error if the argument is a connection error
+func IsConnectionError(err error) bool {
+	errStr := err.Error()
+	return strings.HasPrefix(errStr, "ORA-03114") || strings.HasPrefix(errStr, "ORA-03113")
 }
