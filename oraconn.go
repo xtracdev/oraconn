@@ -2,6 +2,7 @@ package oraconn
 
 import (
 	"database/sql"
+	//Canonical anonymous import of driver specifics
 	_ "github.com/mattn/go-oci8"
 	log "github.com/Sirupsen/logrus"
 	"fmt"
@@ -10,14 +11,19 @@ import (
 	"strings"
 )
 
+//OracleDB embeds sql.DB and extends it with the ability to retry connecting to
+//the database when errors occur, detecting certain disconnections, and reconnecting
+//to the database.
 type OracleDB struct {
 	*sql.DB
 	connectStr string
 }
 
+//ErrRetryCount is used to indicate invalid retry count values passed to
+//OpenAndConnect.
 var ErrRetryCount = errors.New("Retry count must be greater than 1")
 
-//OpenAndConnect attempts to open a connection to Oracle as specified in the
+// OpenAndConnect attempts to open a connection to Oracle as specified in the
 // provided connection string. The connection is considered open when Ping returns
 // with a nil error. The connection Ping is is tried the number of times
 // indicated by the retry count, with a sleep delay of the current attempt in
