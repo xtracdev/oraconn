@@ -61,10 +61,10 @@ func init() {
 	Given(`^a loss of database connectivity$`, func() {
 		var err error
 		db, err = oraconn.OpenAndConnect(connectStr, 10)
-		assert.Nil(T, err)
-
-		err = db.Close()
-		assert.Nil(T,err)
+		if assert.Nil(T, err) {
+			err = db.Close()
+			assert.Nil(T, err)
+		}
 	})
 
 	When(`^I detect I've lost connectivity$`, func() {
