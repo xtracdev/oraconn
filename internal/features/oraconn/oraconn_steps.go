@@ -1,7 +1,7 @@
 package oraconn
 
 import (
-	. "github.com/lsegal/gucumber"
+	. "github.com/gucumber/gucumber"
 	log "github.com/Sirupsen/logrus"
 	"github.com/xtraclabs/oraconn"
 	"github.com/stretchr/testify/assert"
