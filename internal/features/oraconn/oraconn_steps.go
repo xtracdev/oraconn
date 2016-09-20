@@ -1,12 +1,12 @@
 package oraconn
 
 import (
-	. "github.com/gucumber/gucumber"
-	log "github.com/Sirupsen/logrus"
-	"github.com/xtracdev/oraconn"
-	"github.com/stretchr/testify/assert"
-	"time"
 	"errors"
+	log "github.com/Sirupsen/logrus"
+	. "github.com/gucumber/gucumber"
+	"github.com/stretchr/testify/assert"
+	"github.com/xtracdev/oraconn"
+	"time"
 )
 
 const connectStr = "system/oracle@//localhost:1521/xe.oracle.docker"
@@ -97,4 +97,3 @@ func init() {
 		}
 	})
 }
-

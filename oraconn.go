@@ -3,12 +3,12 @@ package oraconn
 import (
 	"database/sql"
 	//Canonical anonymous import of driver specifics
-	_ "github.com/mattn/go-oci8"
-	log "github.com/Sirupsen/logrus"
-	"fmt"
-	"time"
 	"errors"
+	"fmt"
+	log "github.com/Sirupsen/logrus"
+	_ "github.com/mattn/go-oci8"
 	"strings"
+	"time"
 )
 
 //OracleDB embeds sql.DB and extends it with the ability to retry connecting to
@@ -61,13 +61,13 @@ func OpenAndConnect(connectString string, retryCount int) (*OracleDB, error) {
 		return nil, dbError
 	}
 
-	return &OracleDB{DB:db,connectStr:connectString}, nil
+	return &OracleDB{DB: db, connectStr: connectString}, nil
 }
 
 //Reconnect to the database. Useful when a loss of connection has been detected
 func (odb *OracleDB) Reconnect(retryCount int) error {
 	odb.Close()
-	db,err := OpenAndConnect(odb.connectStr, retryCount)
+	db, err := OpenAndConnect(odb.connectStr, retryCount)
 	if err != nil {
 		return err
 	}
@@ -79,7 +79,7 @@ func (odb *OracleDB) Reconnect(retryCount int) error {
 //BuildConnectString builds an Oracle connect string from its constituent parts.
 func BuildConnectString(user, password, host, port, service string) string {
 	return fmt.Sprintf("%s/%s@//%s:%s/%s",
-				user, password, host, port, service)
+		user, password, host, port, service)
 }
 
 //IsConnectionError returns error if the argument is a connection error
