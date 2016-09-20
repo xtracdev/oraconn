@@ -3,7 +3,7 @@ package oraconn
 import (
 	. "github.com/gucumber/gucumber"
 	log "github.com/Sirupsen/logrus"
-	"github.com/xtraclabs/oraconn"
+	"github.com/xtracdev/oraconn"
 	"github.com/stretchr/testify/assert"
 	"time"
 	"errors"

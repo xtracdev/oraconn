@@ -16,7 +16,13 @@ implementation with some additional capabilities:
  to the database is lost or hopeless, in which `Reconnect` should be used
  to reconnect to the database.
  
-## Implementation Notes
+## Dependencies
  
-This package uses the `https://github.com/mattn/go-oci8` package for 
-working with Oracle.
+<pre>
+go get github.com/rjeczalik/pkgconfig/cmd/pkg-config
+go get github.com/mattn/go-oci8
+go get github.com/gucumber/gucumber/cmd/gucumber
+go get github.com/stretchr/testify/assert
+go get github.com/Sirupsen/logrus
+</pre>
+
