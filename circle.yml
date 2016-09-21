@@ -1,0 +1,11 @@
+machine:
+  services:
+   - docker
+
+dependencies:
+  override:
+    - docker run --rm -v "$PWD":/go/src/github.com/xtracdev/oraconn -w /go/src/github.com/xtracdev/oraconn xtracdev/goora bash -c make
+
+test:
+  override:
+    - echo 'test automation tbd'
