@@ -7,17 +7,36 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/xtracdev/oraconn"
 	"time"
+	"os"
+	"fmt"
 )
 
-const connectStr = "system/oracle@//localhost:1521/xe.oracle.docker"
 const bogusConnectStr = "system/oracle@//localhost:15121/xe.oracle.docker"
 
+var connectStr = ""
+var maskedConnectStr = ""
+
+
+func formConnectStringFromEnv() {
+	user := os.Getenv("FEED_DB_USER")
+	password := os.Getenv("FEED_DB_PASSWORD")
+	dbhost := os.Getenv("FEED_DB_HOST")
+	dbPort := os.Getenv("FEED_DB_PORT")
+	dbSvc := os.Getenv("FEED_DB_SVC")
+
+	connectStr = fmt.Sprintf("%s/%s@//%s:%s/%s", user, password, dbhost, dbPort, dbSvc)
+	maskedConnectStr = fmt.Sprintf("%s/<a password obviously not this string>@//%s:%s/%s", user, dbhost, dbPort, dbSvc)
+}
+
 func init() {
+	formConnectStringFromEnv()
+
+
 	var db *oraconn.OracleDB
 	var noConnectError error
 
 	Given(`^a running oracle instance$`, func() {
-		log.Infof("Oracle instance available via %s assumed", connectStr)
+		log.Infof("Oracle instance available via %s assumed", maskedConnectStr)
 	})
 
 	When(`^provide a connection string for the running instance$`, func() {
@@ -47,7 +66,7 @@ func init() {
 	})
 
 	Given(`^a connection string with no listener$`, func() {
-		log.Infof("No oracle instance available via %s assumed", connectStr)
+		log.Infof("No oracle instance available via %s assumed", bogusConnectStr)
 	})
 
 	When(`^I connect to no listener$`, func() {

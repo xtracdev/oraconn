@@ -33,7 +33,7 @@ func OpenAndConnect(connectString string, retryCount int) (*OracleDB, error) {
 		return nil, ErrRetryCount
 	}
 
-	log.Infof("Open the database with connect string %s, %d retries", connectString, retryCount)
+	log.Infof("Open the database, %d retries", retryCount)
 	db, err := sql.Open("oci8", connectString)
 	if err != nil {
 		return nil, err
