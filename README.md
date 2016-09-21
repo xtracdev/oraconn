@@ -1,5 +1,7 @@
 ## Oraconn - Oracle Connection Utilities
 
+[![CircleCI](https://circleci.com/gh/xtracdev/oraconn.svg?style=svg)](https://circleci.com/gh/xtracdev/oraconn)
+
 This package provide a simple mechanism to extend the Oracle sql.DB
 implementation with some additional capabilities:
 
