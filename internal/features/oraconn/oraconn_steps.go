@@ -18,11 +18,11 @@ var maskedConnectStr = ""
 
 
 func formConnectStringFromEnv() {
-	user := os.Getenv("FEED_DB_USER")
-	password := os.Getenv("FEED_DB_PASSWORD")
-	dbhost := os.Getenv("FEED_DB_HOST")
-	dbPort := os.Getenv("FEED_DB_PORT")
-	dbSvc := os.Getenv("FEED_DB_SVC")
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
+	dbhost := os.Getenv("DB_HOST")
+	dbPort := os.Getenv("DB_PORT")
+	dbSvc := os.Getenv("DB_SVC")
 
 	connectStr = fmt.Sprintf("%s/%s@//%s:%s/%s", user, password, dbhost, dbPort, dbSvc)
 	maskedConnectStr = fmt.Sprintf("%s/<a password obviously not this string>@//%s:%s/%s", user, dbhost, dbPort, dbSvc)
