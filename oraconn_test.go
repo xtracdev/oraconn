@@ -29,27 +29,28 @@ func TestConfig(t *testing.T) {
 		errorComponents []string
 		expectError bool
 		connectString string
+		maskedConnectString string
 	}{
 		{
 			"all environment present",
 			map[string]string{DBUser:"user",DBPassword:"password",DBHost:"host",DBPort:"port",DBSvc:"svc"},
 			[]string{},
 			false,
-			"user/password@//host:port/svc",
+			"user/password@//host:port/svc", "user/XXXX@//host:port/svc",
 		},
 		{
 			"no environment present",
 			map[string]string{},
 			[]string{DBUser,DBPassword,DBHost,DBPort,DBSvc},
 			true,
-			"",
+			"","",
 		},
 		{
 			"some environment present",
 			map[string]string{DBUser:"user",DBPort:"port",DBSvc:"svc"},
 			[]string{DBPassword,DBHost},
 			true,
-			"",
+			"","",
 		},
 	}
 
